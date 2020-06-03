@@ -7,8 +7,6 @@ db/schema.rb
 /tmp/pids
 /tmp/sessions
 /tmp/sockets
-config/database.yml
-config/config.yml
 *.sw*
 *~
 public/assets
@@ -20,7 +18,6 @@ tmp/restart.txt
 tmp/puma-*
 tmp/profile
 tmp/performance*
-config/sidekiq.yml
 dump.rdb
 config/cookies.txt
 coverage

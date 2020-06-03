@@ -1,0 +1,4 @@
+---
+:redis_host: ENV['redis_host']
+:redis_port: ENV['redis_port']
+:redis_database: 1

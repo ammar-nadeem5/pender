@@ -1,10 +1,10 @@
 development: &default
-  secret_token: somethingsecret
+  secret_token: ENV['secret_token']
   authorization_header: 'X-Pender-Token'
   timeout: 25
   public_url: 'http://localhost:3200'
-  redis_host: 'redis'
-  redis_port: 6379
+  redis_host: ENV['redis_host']
+  redis_port: ENV['redis_port']
   redis_database: 1
 
   # File storage on S3 or API equivalent
@@ -13,14 +13,14 @@ development: &default
   # Use values below for local development
   #
   storage:
-    endpoint: 'http://minio:9000'
-    access_key: 'AKIAIOSFODNN7EXAMPLE'
-    secret_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
-    bucket: 'check-dev'
-    bucket_region: 'us-east-1'
-    video_bucket: 'pender-video'
-    video_asset_path: 'http://localhost:9000/pender-video/video'
-
+    endpoint: ENV['endpoint']
+    access_key: ENV['access_key']
+    secret_key: ENV['secret_key']
+    bucket: ENV['bucket']
+    bucket_region: ENV['bucket_region']
+    video_bucket: ENV['video_bucket']
+    video_asset_path: 'https://pender-api.herokuapp.com/video'
+    
   # Exception reporting using Airbrake or API equivalent https://airbrake.io/
   #
   # OPTIONAL
@@ -37,23 +37,23 @@ development: &default
   # OPTIONAL for Safe Browsing Lookup API https://developers.google.com/safe-browsing/v4/lookup-api
   # To get a key, follow these instructions https://developers.google.com/safe-browsing/v4/get-started
   #
-  google_api_key: # '<GOOGLE API KEY>'
+  google_api_key: ENV['google_api_key']
 
   # Twitter API
   #
   # REQUIRED for Twitter posts
   #
-  twitter_consumer_key: # '<TWITTER APP CONSUMER KEY>'
-  twitter_consumer_secret: # '<TWITTER APP CONSUMER SECRET>'
-  twitter_access_token: # '<TWITTER APP ACCESS TOKEN>'
-  twitter_access_token_secret: # '<TWITTER APP ACCESS TOKEN SECRET>'
+  twitter_consumer_key: ENV['twitter_consumer_key']
+  twitter_consumer_secret: ENV['twitter_consumer_secret']
+  twitter_access_token: ENV['twitter_access_token']
+  twitter_access_token_secret: ENV['twitter_access_token_secret']
 
   # Facebook API
   #
   # REQUIRED for Facebook social metrics
   #
-  facebook_app_id: # '<FACEBOOK APP ID>'
-  facebook_app_secret: # '<FACEBOOK APP SECRET>'
+  facebook_app_id: ENV['facebook_app_id']
+  facebook_app_secret: ENV['facebook_app_secret']
 
   # Luminati proxy service https://luminati.io/
   #
@@ -87,3 +87,4 @@ test:
 
 production:
   <<: *default
+  public_url: 'https://pender-api.herokuapp.com'
