@@ -17,5 +17,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  url: <%= ENV['DATABASE_URL'] %>
   pool: 5
+  database: pender_production
+  username: pender
+  url: <%= ENV['DATABASE_URL'] %>
