@@ -17,6 +17,5 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: pender
+  url: <%= ENV['DATABASE_URL'] %>
   pool: 5
-  username: heroku
