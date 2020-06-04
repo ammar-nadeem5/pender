@@ -1,14 +1,12 @@
 require 'aws-sdk-s3'
 require 'pender_store'
 
-puts CONFIG.dig('storage', 's3_endpoint')
-
 Aws.config.update(
-  endpoint: "https://bucketeer-cb5f8183-a350-4842-a090-7878df815daf.s3.amazonaws.com/public/",
-  access_key_id: CONFIG.dig('storage', 'access_key'),
-  secret_access_key: CONFIG.dig('storage', 'secret_key'),
+  endpoint: ENV['s3_endpoint'],
+  access_key_id: ENV['access_key'],
+  secret_access_key: ENV['secret_key'],
   force_path_style: true,
-  region: CONFIG.dig('storage', 'bucket_region')
+  region: ENV['bucket_region']
 )
 
 resource = Aws::S3::Resource.new
