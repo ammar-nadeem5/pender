@@ -13,7 +13,7 @@ development: &default
   # Use values below for local development
   #
   storage:
-    # endpoint: ENV['endpoint']
+    endpoint: ENV['endpoint']
     access_key: ENV['access_key']
     secret_key: ENV['secret_key']
     bucket: ENV['bucket']
