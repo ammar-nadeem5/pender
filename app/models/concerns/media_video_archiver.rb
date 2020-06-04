@@ -28,7 +28,7 @@ module MediaVideoArchiver
         system('youtube-dl', uri, proxy, output, '--restrict-filenames', '--no-warnings', '-q', '--write-all-thumbnails', '--write-info-json', '--all-subs', '-fogg/mp4/webm')
 
         if $?.success?
-          Media.store_video_folder(url, local_folder, self.archiving_folder, key_id)
+          # Media.store_video_folder(url, local_folder, self.archiving_folder, key_id)
         else
           retry_archiving_after_failure('ARCHIVER_FAILURE', 'video_archiver', 5.minutes, { url: url, key_id: key_id, attempts: attempts, code: $?.exitstatus, message: I18n.t(:archiver_video_not_downloaded), supported: supported })
         end

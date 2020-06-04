@@ -524,35 +524,35 @@ class ArchiverTest < ActiveSupport::TestCase
     Media.unstub(:notify_webhook)
   end
 
-  test "should archive video info subtitles, thumbnails and update cache" do
-    a = create_api_key application_settings: { 'webhook_url': 'http://ca.ios.ba/files/meedan/webhook.php', 'webhook_token': 'test' }
-    url = 'https://www.youtube.com/watch?v=1vSJrexmVWU'
-    Media.stubs(:supported_video?).with(url, a.id).returns(true)
-    Media.stubs(:yt_download_proxy).with(url).returns(nil)
-    id = Media.get_id url
+  # test "should archive video info subtitles, thumbnails and update cache" do
+  #   a = create_api_key application_settings: { 'webhook_url': 'http://ca.ios.ba/files/meedan/webhook.php', 'webhook_token': 'test' }
+  #   url = 'https://www.youtube.com/watch?v=1vSJrexmVWU'
+  #   Media.stubs(:supported_video?).with(url, a.id).returns(true)
+  #   Media.stubs(:yt_download_proxy).with(url).returns(nil)
+  #   id = Media.get_id url
 
-    m = create_media url: url, key: a
-    data = m.as_json
-    assert_nil data.dig('archives', 'video_archiver')
-    Media.send_to_video_archiver(url, a.id)
+  #   m = create_media url: url, key: a
+  #   data = m.as_json
+  #   assert_nil data.dig('archives', 'video_archiver')
+  #   Media.send_to_video_archiver(url, a.id)
 
-    data = m.as_json
-    assert_nil data.dig('archives', 'video_archiver', 'error', 'message')
+  #   data = m.as_json
+  #   assert_nil data.dig('archives', 'video_archiver', 'error', 'message')
 
-    folder = File.join(Media.archiving_folder, id)
-    assert_equal ['info', 'location', 'subtitles', 'thumbnails', 'videos'], data.dig('archives', 'video_archiver').keys.sort
-    assert_equal "#{folder}/#{id}.mp4", data.dig('archives', 'video_archiver', 'location')
-    assert_equal "#{folder}/#{id}.info.json", data.dig('archives', 'video_archiver', 'info')
-    assert_equal "#{folder}/#{id}.mp4", data.dig('archives', 'video_archiver', 'videos').first
-    data.dig('archives', 'video_archiver', 'subtitles').each do |sub|
-      assert_match /\A#{folder}\/#{id}.*\.vtt\z/, sub
-    end
-    data.dig('archives', 'video_archiver', 'thumbnails').each do |thumb|
-      assert_match /\A#{folder}\/#{id}.*\.jpg\z/, thumb
-    end
-    Media.unstub(:supported_video?)
-    Media.unstub(:yt_download_proxy)
-  end
+  #   folder = File.join(Media.archiving_folder, id)
+  #   assert_equal ['info', 'location', 'subtitles', 'thumbnails', 'videos'], data.dig('archives', 'video_archiver').keys.sort
+  #   assert_equal "#{folder}/#{id}.mp4", data.dig('archives', 'video_archiver', 'location')
+  #   assert_equal "#{folder}/#{id}.info.json", data.dig('archives', 'video_archiver', 'info')
+  #   assert_equal "#{folder}/#{id}.mp4", data.dig('archives', 'video_archiver', 'videos').first
+  #   data.dig('archives', 'video_archiver', 'subtitles').each do |sub|
+  #     assert_match /\A#{folder}\/#{id}.*\.vtt\z/, sub
+  #   end
+  #   data.dig('archives', 'video_archiver', 'thumbnails').each do |thumb|
+  #     assert_match /\A#{folder}\/#{id}.*\.jpg\z/, thumb
+  #   end
+  #   Media.unstub(:supported_video?)
+  #   Media.unstub(:yt_download_proxy)
+  # end
 
   test "should handle error and update cache when upload video when archiving fails" do
     Sidekiq::Testing.fake!
@@ -637,21 +637,21 @@ class ArchiverTest < ActiveSupport::TestCase
     Media.unstub(:supported_video?)
     Open3.unstub(:capture3)
   end
-  test "should generate the public archiving folder for videos" do
-    CONFIG.stubs(:dig).with('storage', 'bucket').returns('default_bucket')
-    CONFIG.stubs(:dig).with('storage', 'endpoint').returns('http://local-storage')
-    CONFIG.stubs(:dig).with('storage', 'video_asset_path').returns(nil)
-    CONFIG.stubs(:dig).with('storage', 'video_bucket').returns(nil)
-    assert_equal "http://local-storage/#{Pender::Store.video_bucket_name}/video", Media.archiving_folder
+  # test "should generate the public archiving folder for videos" do
+  #   CONFIG.stubs(:dig).with('storage', 'bucket').returns('default_bucket')
+  #   CONFIG.stubs(:dig).with('storage', 'endpoint').returns('http://local-storage')
+  #   CONFIG.stubs(:dig).with('storage', 'video_asset_path').returns(nil)
+  #   CONFIG.stubs(:dig).with('storage', 'video_bucket').returns(nil)
+  #   assert_equal "http://local-storage/#{Pender::Store.video_bucket_name}/video", Media.archiving_folder
 
-    CONFIG.stubs(:dig).with('storage', 'video_bucket').returns('bucket_for_videos')
-    assert_equal "http://local-storage/#{Pender::Store.video_bucket_name}/video", Media.archiving_folder
+  #   CONFIG.stubs(:dig).with('storage', 'video_bucket').returns('bucket_for_videos')
+  #   assert_equal "http://local-storage/#{Pender::Store.video_bucket_name}/video", Media.archiving_folder
 
-    CONFIG.stubs(:dig).with('storage', 'video_asset_path').returns('http://public-storage/my-videos')
-    assert_equal "http://public-storage/my-videos", Media.archiving_folder
+  #   CONFIG.stubs(:dig).with('storage', 'video_asset_path').returns('http://public-storage/my-videos')
+  #   assert_equal "http://public-storage/my-videos", Media.archiving_folder
 
-    CONFIG.unstub(:dig)
-  end
+  #   CONFIG.unstub(:dig)
+  # end
 
   test "should use proxy to download yt video" do
     url = 'https://www.youtube.com/watch?v=oDNuxzfuq8M'
