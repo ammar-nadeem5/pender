@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 gem 'rails', '4.2.11.1'
 gem 'pg', '0.20'
-
 group :development, :test do
   gem 'byebug'
 end
@@ -55,3 +54,4 @@ gem 'rack', '>= 1.6.11'
 gem 'aws-sdk-s3'
 gem 'honeycomb-beeline'
 gem 'lograge'
+gem 'rails_12factor'
