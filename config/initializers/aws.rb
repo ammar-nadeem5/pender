@@ -2,7 +2,7 @@ require 'aws-sdk-s3'
 require 'pender_store'
 
 Aws.config.update(
-  endpoint: CONFIG.dig('storage', 'endpoint'),
+  endpoint: "https://bucketeer-cb5f8183-a350-4842-a090-7878df815daf.s3.amazonaws.com/public/",
   access_key_id: CONFIG.dig('storage', 'access_key'),
   secret_access_key: CONFIG.dig('storage', 'secret_key'),
   force_path_style: true,
