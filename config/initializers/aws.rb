@@ -1,7 +1,7 @@
 require 'aws-sdk-s3'
 require 'pender_store'
 
-byebug
+puts CONFIG.dig('storage', 's3_endpoint')
 
 Aws.config.update(
   endpoint: "https://bucketeer-cb5f8183-a350-4842-a090-7878df815daf.s3.amazonaws.com/public/",
