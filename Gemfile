@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'rails', '4.2.11.1'
 gem 'pg', '0.20'
+gem 'byebug'
 group :development, :test do
   gem 'byebug'
 end
